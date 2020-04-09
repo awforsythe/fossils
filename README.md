@@ -8,6 +8,19 @@ To build and run all containers, using docker-compose:
 * Development: `docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --build`
 * _Frontend will be accessible via [http://localhost:3000](http://localhost:3000)._
 
+The database volume (`fossils_pgdata`) will persist after shutting down; you can purge it with `docker-compose down -v` to clear all data and start fresh on your next run.
+
+## db
+
+To spin up a database container in Docker for testing:
+
+* `cd db`
+* `docker volume create pgtest` _(Will persist; remove with `docker volume rm pgtest`)_
+* `docker build -t fossils-db .`
+* `docker run -p 5442:5432 -v pgtest:/var/lib/postgresql/data -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres fossils-db`
+* _Connect a postgres terminal with `psql -p 5442 -U postgres -d postgres` (password is `postgres`)._
+* _Container will be left running; use `docker ps` and `docker stop <container-id>` to shut it down._
+
 ## app
 
 To run the app locally:

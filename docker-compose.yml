@@ -1,6 +1,20 @@
 version: '3'
 services:
 
+  fossils-db:
+    container_name: fossils-db
+    image: fossils-db
+    build: ./db
+    restart: always
+    ports:
+      - 5442:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
   fossils-app:
     container_name: fossils-app
     image: fossils-app
@@ -24,3 +38,6 @@ services:
       - fossils-frontend
     ports:
       - 3000:80
+
+volumes:
+  pgdata:
