@@ -1,14 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { Message, Loader } from 'semantic-ui-react';
 
 import { TeamContext } from '../contexts/TeamContext.jsx';
 
 import TeamHeader from '../components/team/TeamHeader.jsx';
+import TeamEditDialog from '../components/team/TeamEditDialog.jsx';
 import FossilTable from '../components/fossils/FossilTable.jsx';
 
 const TeamPage = () => {
   const context = useContext(TeamContext);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
   if (context.error) {
     return (
       <Message negative>
@@ -28,9 +30,14 @@ const TeamPage = () => {
         name={context.team.name}
         code={context.team.code}
         players={context.team.players}
+        onEditClick={() => setEditDialogOpen(true)}
       />
       <FossilTable
         players={context.team.players}
+      />
+      <TeamEditDialog
+        open={editDialogOpen}
+        onClose={() => setEditDialogOpen(false)}
       />
     </div>
   );

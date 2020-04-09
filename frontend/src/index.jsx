@@ -9,8 +9,6 @@ import './style.css';
 
 import { FossilsProvider } from './contexts/FossilsContext.jsx';
 import { TeamProvider } from './contexts/TeamContext.jsx';
-import TeamHeader from './components/team/TeamHeader.jsx';
-import FossilTable from './components/fossils/FossilTable.jsx';
 import IndexPage from './pages/IndexPage.jsx';
 import TeamPage from './pages/TeamPage.jsx';
 
