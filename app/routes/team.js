@@ -31,6 +31,24 @@ router.post('/', [
   }
 );
 
+router.post('/:code', [
+    body('name').isString().isLength({ min: 1, max: 128 }),
+  ],
+  validateParams,
+  runQuery(`
+    UPDATE fossil.team SET name = $name
+      WHERE code = $code
+    RETURNING *;`,
+    (req) => ({ code: req.params.code, name: req.body.name })
+  ),
+  (req, res, next) => {
+    if (req.queryResult.rowCount <= 0) {
+      return res.status(404).send({ message: `No team found with code '${req.params.code}'` });
+    }
+    res.send({ team: req.queryResult.rows[0] });
+  }
+);
+
 router.post('/:code/player', [
     param('code').isString().isLength({ min: 1, max: 128 }),
     body('name').isString().isLength({ min: 1, max: 128 }),
@@ -49,6 +67,28 @@ router.post('/:code/player', [
   }
 );
 
+router.post('/:code/player/:id', [
+    param('code').isString().isLength({ min: 1, max: 128 }),
+    param('id').isInt().toInt(),
+    body('name').isString().isLength({ min: 1, max: 128 }),
+  ],
+  validateParams,
+  runQuery(`
+    WITH t AS (SELECT id FROM fossil.team WHERE code = $code)
+    UPDATE fossil.player SET name = $name
+    WHERE team_id = (SELECT id FROM t) AND id = $id RETURNING *;`,
+    (req) => ({ code: req.params.code, id: req.params.id, name: req.body.name })
+  ),
+  (req, res, next) => {
+    if (req.queryResult.rowCount <= 0) {
+      return res.status(404).send({
+        message: `No player with ID ${req.params.id} found in team with code '${req.params.code}'`
+      });
+    }
+    res.send({ player: req.queryResult.rows[0] });
+  }
+);
+
 router.get('/:code',
   runQuery(`
     WITH t AS (SELECT * FROM fossil.TEAM WHERE code = $code)
@@ -64,7 +104,7 @@ router.get('/:code',
   (req, res, next) => {
     const { rowCount, rows } = req.queryResult;
     if (rowCount <= 0) {
-      return res.status(404).send({ message: `No team found with code '${req.params.code}'` })
+      return res.status(404).send({ message: `No team found with code '${req.params.code}'` });
     }
     let players = [];
     for (const row of rows) {
