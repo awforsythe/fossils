@@ -21,6 +21,12 @@ services:
     build: ./app
     ports:
       - 3001:8080
+    environment:
+      PGHOST: fossils-db
+      PGPORT: '5432'
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: postgres
 
   fossils-frontend:
     container_name: fossils-frontend
