@@ -33,15 +33,15 @@ router.post('/', [
 
 router.post('/:code/player', [
     param('code').isString().isLength({ min: 1, max: 128 }),
-    body('playerName').isString().isLength({ min: 1, max: 128 }),
+    body('name').isString().isLength({ min: 1, max: 128 }),
   ],
   validateParams,
   runQuery(`
     WITH t AS (SELECT id FROM fossil.team WHERE code = $code)
     INSERT INTO fossil.player (team_id, name) VALUES 
-      ((SELECT id FROM t), $playerName)
+      ((SELECT id FROM t), $name)
     RETURNING *;`,
-    (req) => ({ code: req.params.code, playerName: req.body.playerName })
+    (req) => ({ code: req.params.code, name: req.body.name })
   ),
   (req, res, next) => {
     const player = req.queryResult.rows[0];

@@ -8,6 +8,11 @@ module.exports = {
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'public'),
+    publicPath: '/',
+  },
+  devServer: {
+    publicPath: '/',
+    historyApiFallback: true,
   },
   plugins: [new HtmlWebpackPlugin({ title: 'Fossils' })],
   mode: process.env.NODE_ENV || 'development',
