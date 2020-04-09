@@ -1,15 +1,13 @@
-import React, { useState, useEffect} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 
-const App = () => {
-  const [message, setMessage] = useState('Loading...');
-  useEffect(() => {
-    fetch('/api/fossils')
-    .then(response => response.json())
-    .then(data => setMessage(`Got ${data.species.length} fossil species`))
-    .catch(err => setMessage(`ERROR: ${err}`));
-  })
-  return <h1>{message}</h1>;
-}
+import { FossilsProvider } from './contexts/FossilsContext.jsx';
+import FossilTable from './components/fossils/FossilTable.jsx';
+
+const App = () => (
+  <FossilsProvider>
+    <FossilTable />
+  </FossilsProvider>
+);
 
 ReactDOM.render(<App />, document.body);
