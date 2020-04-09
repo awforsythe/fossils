@@ -6,6 +6,7 @@ To build and run all containers, using docker-compose:
 
 * Production: `docker-compose up --build`
 * Development: `docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --build`
+* _Frontend will be accessible via [http://localhost:3000](http://localhost:3000)._
 
 ## app
 
@@ -20,9 +21,9 @@ To build and run the app with Docker:
 
 * `cd app`
 * `docker build -t fossils-app:dev -f Dockerfile-dev .` _(production: `docker build -t fossils-app .`)_
-* `docker run -p 6001:8080 -v e:/fossils/app:/usr/src/app fossils-app:dev` _(production: `docker run -p 6001:8080 fossils-app`)_
+* `docker run -p 3001:8080 -v e:/fossils/app:/usr/src/app fossils-app:dev` _(production: `docker run -p 3001:8080 fossils-app`)_
 * _Replace `e:/fossils` with the path where you've cloned this repo._
-* _API will be accessible via [http://localhost:6001/api](http://localhost:6001/api)._
+* _API will be accessible via [http://localhost:3001/api](http://localhost:3001/api)._
 * _Container will be left running; use `docker ps` and `docker stop <container-id>` to shut it down._
 
 ## frontend
@@ -38,7 +39,11 @@ To build and serve the frontend with Docker:
 
 * `cd frontend`
 * `docker build -t fossils-frontend:dev -f Dockerfile-dev .` _(production: `docker build -t fossils-frontend .`)_
-* `docker run -p 6002:8080 -v e:/fossils/frontend/src:/usr/src/app/src fossils-frontend:dev` _(production: `docker run -p 6002:8080 fossils-frontend`)_
+* `docker run -p 3002:8080 -v e:/fossils/frontend/src:/usr/src/app/src fossils-frontend:dev` _(production: `docker run -p 3002:8080 fossils-frontend`)_
 * _Replace `e:/fossils` with the path where you've cloned this repo._
-* _Frontend will be accessible via [http://localhost:6002](http://localhost:6002)._
+* _Frontend will be accessible via [http://localhost:3002](http://localhost:3002)._
 * _Container will be left running; use `docker ps` and `docker stop <container-id>` to shut it down._
+
+## nginx
+
+The nginx container sits in front of the backend app and the frontend, and serves as a reverse proxy to route requests to the appropriate service.

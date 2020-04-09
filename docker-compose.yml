@@ -6,11 +6,21 @@ services:
     image: fossils-app
     build: ./app
     ports:
-      - 6001:8080
+      - 3001:8080
 
   fossils-frontend:
     container_name: fossils-frontend
     image: fossils-frontend
     build: ./frontend
     ports:
-      - 6002:8080
+      - 3002:8080
+
+  fossils-nginx:
+    container_name: fossils-nginx
+    image: fossils-nginx
+    build: ./nginx
+    depends_on:
+      - fossils-app
+      - fossils-frontend
+    ports:
+      - 3000:80
