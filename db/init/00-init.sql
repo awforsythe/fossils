@@ -22,23 +22,23 @@ comment on column fossil.piece.id is 'Unique ID for a fossil piece';
 comment on column fossil.piece.species_id is 'Identifies the species that the fossil piece belongs to';
 comment on column fossil.piece.name is 'Name of the in-game item, e.g. "ankylo skull" - for single-piece species, matches the species name';
 
-create table fossil.cohort (
+create table fossil.team (
   id          serial primary key,
   code        text unique not null check (char_length(code) < 128)
 );
-comment on table fossil.cohort is 'A group of players who are using this app to track their fossils and organize trades';
-comment on column fossil.cohort.id is 'Unique, not-at-all secret ID, used internally to associate players with the cohort';
-comment on column fossil.cohort.code is 'A sorta-secret identifier, used to create a private URL that can be shared among the cohort members';
+comment on table fossil.team is 'A group of players who are using this app to track their fossils and organize trades';
+comment on column fossil.team.id is 'Unique, not-at-all secret ID, used internally to associate players with the team';
+comment on column fossil.team.code is 'A sorta-secret identifier, used to create a private URL that can be shared among the team members';
 
 create table fossil.player (
   id          serial primary key,
-  cohort_id   integer not null references fossil.cohort(id),
+  team_id     integer not null references fossil.team(id),
   name        text not null check (char_length(name) < 128),
-  unique(cohort_id, name)
+  unique(team_id, name)
 );
-comment on table fossil.player is 'Represents a single player who is collecting fossils along with other players in a single cohort';
+comment on table fossil.player is 'Represents a single player who is collecting fossils along with other players in a single team';
 comment on column fossil.player.id is 'Unique ID for a player';
-comment on column fossil.player.cohort_id is 'Identifies the cohort that the player belongs to; note that a player can only be in one cohort by design';
+comment on column fossil.player.team_id is 'Identifies the team that the player belongs to; note that a player can only be in one team by design';
 comment on column fossil.player.name is 'User-entered name for this player';
 
 create table fossil.have (
