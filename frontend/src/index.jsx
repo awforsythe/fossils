@@ -18,4 +18,7 @@ const App = () => (
   </FossilsProvider>
 );
 
-ReactDOM.render(<App />, document.body);
+const div = document.createElement('div');
+div.id = "main";
+document.body.appendChild(div);
+ReactDOM.render(<App />, div);
