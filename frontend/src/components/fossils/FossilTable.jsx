@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 
+import { Table } from 'semantic-ui-react';
+
 import { FossilsContext } from '../../contexts/FossilsContext.jsx';
 
 import FossilTableSection from './FossilTableSection.jsx';
@@ -7,8 +9,8 @@ import FossilTableSection from './FossilTableSection.jsx';
 function FossilTable(props) {
   const context = useContext(FossilsContext);
   return (
-    <table style={{ border: '1px solid black' }}>
-      <tbody>
+    <Table compact>
+      <Table.Body>
         {context.species.map(species => (
           <FossilTableSection
             key={species.id}
@@ -17,8 +19,8 @@ function FossilTable(props) {
             pieces={species.pieces}
           />
         ))}
-      </tbody>
-    </table>
+      </Table.Body>
+    </Table>
   );
 }
 

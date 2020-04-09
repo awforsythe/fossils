@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Table } from 'semantic-ui-react';
+
 function FossilTableRow(props) {
   const { pieceId, pieceName } = props;
   return (
-    <tr>
-      <td>{pieceId}</td>
-      <td>{pieceName}</td>
-    </tr>
+    <Table.Row>
+      <Table.Cell width={1} style={{ color: '#aaa' }}>{pieceId}</Table.Cell>
+      <Table.Cell width={15}>{pieceName}</Table.Cell>
+    </Table.Row>
   );
 }
 FossilTableRow.propTypes = {

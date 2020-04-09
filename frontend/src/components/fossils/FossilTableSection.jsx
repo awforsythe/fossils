@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Table } from 'semantic-ui-react';
+
 import FossilTableRow from './FossilTableRow.jsx';
 
 function FossilTableSection(props) {
   const { speciesId, speciesName, pieces } = props;
   return (
     <React.Fragment>
-      <tr>
-        <th>{speciesId}</th>
-        <th>{speciesName}</th>
-      </tr>
+      <Table.Row>
+        <Table.Cell colSpan={2} style={{ backgroundColor: '#f3f3f3', fontWeight: 'bold' }}>{speciesName}</Table.Cell>
+      </Table.Row>
       {pieces.map(piece => (
         <FossilTableRow
           key={piece.id}
