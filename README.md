@@ -5,7 +5,7 @@ A handy tool for tracking fossil collection among friends in Animal Crossing: Ne
 To build and run all containers, using docker-compose:
 
 * Production: `docker-compose up --build`
-* Development: `docker-compose -f docker-compose.yml -f docker-compose-dev.yml up --build`
+* Development: `docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --build`
 
 ## app
 
@@ -14,13 +14,31 @@ To run the app locally:
 * `cd app`
 * `npm install`
 * `npm run start:dev` _(production: `npm run start`)_
-* [http://localhost:8080/api](http://localhost:8080/api)
+* _API will be accessible via [http://localhost:8080/api](http://localhost:8080/api)._
 
 To build and run the app with Docker:
 
 * `cd app`
 * `docker build -t fossils-app:dev -f Dockerfile-dev .` _(production: `docker build -t fossils-app .`)_
 * `docker run -p 6001:8080 -v e:/fossils/app:/usr/src/app fossils-app:dev` _(production: `docker run -p 6001:8080 fossils-app`)_
-    * _(Replace `e:/fossils` with the path where you've cloned this repo.)_
-* [http://localhost:6001/api](http://localhost:6001/api)
-    * _(Container will be left running; use `docker ps` and `docker stop <container-id>` to shut it down.)_
+* _Replace `e:/fossils` with the path where you've cloned this repo._
+* _API will be accessible via [http://localhost:6001/api](http://localhost:6001/api)._
+* _Container will be left running; use `docker ps` and `docker stop <container-id>` to shut it down._
+
+## frontend
+
+To build the frontend locally:
+
+* `cd frontend`
+* `npm install`
+* `npm run build:dev` _(production: `npm run build`)_
+* _Webpack build artifacts will be in `frontend/public`._
+
+To build and serve the frontend with Docker:
+
+* `cd frontend`
+* `docker build -t fossils-frontend:dev -f Dockerfile-dev .` _(production: `docker build -t fossils-frontend .`)_
+* `docker run -p 6002:8080 -v e:/fossils/frontend/src:/usr/src/app/src fossils-frontend:dev` _(production: `docker run -p 6002:8080 fossils-frontend`)_
+* _Replace `e:/fossils` with the path where you've cloned this repo._
+* _Frontend will be accessible via [http://localhost:6002](http://localhost:6002)._
+* _Container will be left running; use `docker ps` and `docker stop <container-id>` to shut it down._

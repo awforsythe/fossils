@@ -7,3 +7,10 @@ services:
       dockerfile: Dockerfile-dev
     volumes:
       - ./app:/usr/src/app:ro
+
+  fossils-frontend:
+    image: fossils-frontend:dev
+    build:
+      dockerfile: Dockerfile-dev
+    volumes:
+      - ./frontend/src:/usr/src/app/src:ro

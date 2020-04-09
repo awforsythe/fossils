@@ -7,3 +7,10 @@ services:
     build: ./app
     ports:
       - 6001:8080
+
+  fossils-frontend:
+    container_name: fossils-frontend
+    image: fossils-frontend
+    build: ./frontend
+    ports:
+      - 6002:8080
