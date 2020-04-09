@@ -8,5 +8,14 @@ To run the app locally:
 
 * `cd app`
 * `npm install`
-* `npm run start:dev`
-* http://localhost:8080
+* `npm run start:dev` _(production: `npm run start`)_
+* [http://localhost:8080/api](http://localhost:8080/api)
+
+To build and run the app with Docker:
+
+* `cd app`
+* `docker build -t fossils-app:dev -f Dockerfile-dev .` _(production: `docker build -t fossils-app .`)_
+* `docker run -p 6001:8080 -v e:/fossils/app:/usr/src/app fossils-app:dev` _(production: `docker run -p 6001:8080 fossils-app`)_
+* _(Replace `e:/fossils` with the path where you've cloned this repo.)_
+* [http://localhost:6001/api](http://localhost:6001/api)
+* _(Container will be left running; use `docker ps` and `docker stop <container-id>` to shut it down.)_
