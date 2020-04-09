@@ -8,12 +8,14 @@ const expressWs = require('express-ws')(app, server);
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+const apiRouter = require('./routes/index.js');
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/api', (req, res, next) => res.send({ message: 'Hello world, I am the API' }));
+app.use('/api', apiRouter);
 
 app.use((err, req, res, next) => {
   if (!err.message || !err.code || err.code >= 500) {
