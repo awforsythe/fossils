@@ -9,8 +9,8 @@ function FossilTableSection(props) {
   const { speciesId, speciesName, pieces } = props;
   return (
     <React.Fragment>
-      <Table.Row>
-        <Table.Cell colSpan={2} style={{ backgroundColor: '#f3f3f3', fontWeight: 'bold' }}>{speciesName}</Table.Cell>
+      <Table.Row className="species-row">
+        <Table.Cell colSpan={2}>{speciesName}</Table.Cell>
       </Table.Row>
       {pieces.map(piece => (
         <FossilTableRow
