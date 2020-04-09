@@ -1,0 +1,9 @@
+version: '3'
+services:
+
+  fossils-app:
+    image: fossils-app:dev
+    build:
+      dockerfile: Dockerfile-dev
+    volumes:
+      - ./app:/usr/src/app:ro

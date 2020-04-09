@@ -1,0 +1,9 @@
+version: '3'
+services:
+
+  fossils-app:
+    container_name: fossils-app
+    image: fossils-app
+    build: ./app
+    ports:
+      - 6001:8080
