@@ -24,11 +24,13 @@ comment on column fossil.piece.name is 'Name of the in-game item, e.g. "ankylo s
 
 create table fossil.team (
   id          serial primary key,
-  code        text unique not null check (char_length(code) < 128)
+  code        text unique not null check (char_length(code) < 128),
+  name        text not null check (char_length(name) < 128)
 );
 comment on table fossil.team is 'A group of players who are using this app to track their fossils and organize trades';
 comment on column fossil.team.id is 'Unique, not-at-all secret ID, used internally to associate players with the team';
 comment on column fossil.team.code is 'A sorta-secret identifier, used to create a private URL that can be shared among the team members';
+comment on column fossil.team.name is 'A human-readable name for the team, just to give it some character';
 
 create table fossil.player (
   id          serial primary key,
