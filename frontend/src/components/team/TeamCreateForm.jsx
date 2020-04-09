@@ -25,7 +25,7 @@ function TeamCreateForm() {
   }
 
   if (redirectUrl) {
-    return <Redirect to={redirectUrl} />;
+    return <Redirect push to={redirectUrl} />;
   }
 
   return (
