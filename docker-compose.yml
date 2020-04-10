@@ -43,7 +43,7 @@ services:
       - fossils-app
       - fossils-frontend
     ports:
-      - 3000:80
+      - 80:80
 
 volumes:
   pgdata:

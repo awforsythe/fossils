@@ -14,3 +14,7 @@ services:
       dockerfile: Dockerfile-dev
     volumes:
       - ./frontend/src:/usr/src/app/src:ro
+
+  fossils-nginx:
+    ports:
+      - 3000:80
