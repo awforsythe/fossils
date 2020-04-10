@@ -7,7 +7,7 @@ import PlayerHaveLabels from './PlayerHaveLabels.jsx';
 import FossilTableRow from './FossilTableRow.jsx';
 
 function FossilTableSection(props) {
-  const { speciesId, speciesName, pieces, players } = props;
+  const { speciesName, pieces, players, teamCode } = props;
   return (
     <React.Fragment>
       <Table.Row className="species-row">
@@ -22,16 +22,17 @@ function FossilTableSection(props) {
           pieceId={piece.id}
           pieceName={piece.name}
           players={players}
+          teamCode={teamCode}
         />
       ))}
     </React.Fragment>
   );
 }
 FossilTableSection.propTypes = {
-  speciesId: PropTypes.number.isRequired,
   speciesName: PropTypes.string.isRequired,
   pieces: PropTypes.arrayOf(PropTypes.object).isRequired,
   players: PropTypes.arrayOf(PropTypes.object).isRequired,
+  teamCode: PropTypes.string.isRequired,
 };
 
 export default FossilTableSection;

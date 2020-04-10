@@ -19,3 +19,16 @@
 .piece-name {
   text-transform: capitalize;
 }
+
+.have-cell {
+  height: 20px;
+  cursor: pointer;
+  color: #ccc;
+}
+.have-cell:hover {
+  background: linear-gradient(to right, #fff 0%, #f0f0fc 50%, #fff 100%);
+}
+.have-cell-label {
+  margin-top: -2px !important;
+  margin-bottom: -2px !important;
+}

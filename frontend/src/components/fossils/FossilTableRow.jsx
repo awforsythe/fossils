@@ -6,13 +6,13 @@ import { Table } from 'semantic-ui-react';
 import PlayerHaveCells from './PlayerHaveCells.jsx';
 
 function FossilTableRow(props) {
-  const { pieceId, pieceName, players } = props;
+  const { pieceId, pieceName, players, teamCode } = props;
   return (
     <Table.Row>
       <Table.Cell width={1} className="piece-id">{pieceId}</Table.Cell>
       <Table.Cell width={3} className="piece-name">{pieceName}</Table.Cell>
       <Table.Cell width={12}>
-        <PlayerHaveCells pieceId={pieceId} players={players} />
+        <PlayerHaveCells pieceId={pieceId} players={players} teamCode={teamCode} />
       </Table.Cell>
     </Table.Row>
   );
@@ -21,6 +21,7 @@ FossilTableRow.propTypes = {
   pieceId: PropTypes.number.isRequired,
   pieceName: PropTypes.string.isRequired,
   players: PropTypes.arrayOf(PropTypes.object).isRequired,
+  teamCode: PropTypes.string.isRequired,
 };
 
 export default FossilTableRow;

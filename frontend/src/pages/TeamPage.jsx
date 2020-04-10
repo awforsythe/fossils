@@ -34,6 +34,7 @@ const TeamPage = () => {
       />
       <FossilTable
         players={context.team.players}
+        teamCode={context.team.code}
       />
       <TeamEditDialog
         open={editDialogOpen}

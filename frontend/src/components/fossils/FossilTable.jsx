@@ -15,17 +15,17 @@ function FossilTable(props) {
   if (!context.species) {
     return <Loader active content="Loading fossils..." />
   }
-  const { players } = props;
+  const { players, teamCode } = props;
   return (
     <Table compact>
       <Table.Body>
         {context.species.map(species => (
           <FossilTableSection
             key={species.id}
-            speciesId={species.id}
             speciesName={species.name}
             pieces={species.pieces}
             players={players}
+            teamCode={teamCode}
           />
         ))}
       </Table.Body>
@@ -34,6 +34,7 @@ function FossilTable(props) {
 }
 FossilTable.propTypes = {
   players: PropTypes.arrayOf(PropTypes.object).isRequired,
+  teamCode: PropTypes.string.isRequired,
 };
 
 export default FossilTable;
