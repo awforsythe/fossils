@@ -21,7 +21,10 @@ function TeamEditForm(props) {
       body: JSON.stringify({ name: newTeamName }),
     })
       .then(expectJson)
-      .then(onClose)
+      .then(data => {
+        setNewTeamName(data.team.name);
+        setIsSubmitting(false);
+      })
       .catch(err => setSubmitError(err.message));
   }
 
