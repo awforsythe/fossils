@@ -6,7 +6,7 @@ import { Form, Button, Message, Dimmer, Loader } from 'semantic-ui-react';
 import { expectJson } from '../../util.jsx';
 
 function TeamEditForm(props) {
-  const { code, name, players, onClose } = props;
+  const { code, name } = props;
   const [newTeamName, setNewTeamName] = useState(name);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(null);
@@ -58,8 +58,6 @@ function TeamEditForm(props) {
 TeamEditForm.propTypes = { 
   code: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  players: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onClose: PropTypes.func.isRequired,
 };
 
 export default TeamEditForm;

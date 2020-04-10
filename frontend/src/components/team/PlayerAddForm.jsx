@@ -5,24 +5,25 @@ import { Form, Button, Message, Dimmer, Loader } from 'semantic-ui-react';
 
 import { expectJson } from '../../util.jsx';
 
-function PlayersAdminListItem(props) {
-  const { id, name, teamCode } = props;
-  const [newName, setNewName] = useState(name);
+function PlayerAddForm(props) {
+  const { teamCode } = props;
+  const [name, setName] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(null);
-  const canSubmit = !isSubmitting && newName.length > 0 && newName !== name;
+  const canSubmit = !isSubmitting && name.length > 0;
 
   function handleSubmit(event) {
     event.preventDefault();
     setIsSubmitting(true);
-    fetch(`/api/team/${teamCode}/player/${id}`, {
+    fetch(`/api/team/${teamCode}/player`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: newName }),
+      body: JSON.stringify({ name }),
     })
       .then(expectJson)
       .then(data => {
-        setNewName(data.player.name);
+        console.log(data);
+        setName('');
         setIsSubmitting(false);
       })
       .catch(err => setSubmitError(err.message));
@@ -44,9 +45,9 @@ function PlayersAdminListItem(props) {
               <input
                 type="text"
                 name="name"
-                value={newName}
-                onChange={(event) => setNewName(event.target.value)}
-                placeholder="Player name"
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+                placeholder="New player name"
                 autoComplete="off"
               />
             </Form.Field>
@@ -57,7 +58,7 @@ function PlayersAdminListItem(props) {
               type="submit"
               disabled={!canSubmit}
             >
-              Rename
+              Add Player
             </Button>
           </div>
         </div>
@@ -65,10 +66,8 @@ function PlayersAdminListItem(props) {
     </Form>
   );
 }
-PlayersAdminListItem.propTypes = {
-  id: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
+PlayerAddForm.propTypes = {
   teamCode: PropTypes.string.isRequired,
 };
 
-export default PlayersAdminListItem;
+export default PlayerAddForm;

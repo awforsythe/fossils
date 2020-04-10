@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
-import { Modal, Message, Loader, Tab } from 'semantic-ui-react';
+import { Modal, Message, Loader, Tab, Divider } from 'semantic-ui-react';
 
 import { TeamContext } from '../../contexts/TeamContext.jsx';
 
 import TeamEditForm from './TeamEditForm.jsx';
 import PlayersAdminList from './PlayersAdminList.jsx';
+import PlayerAddForm from './PlayerAddForm.jsx';
 
 function TeamEditDialog(props) {
   const context = useContext(TeamContext);
@@ -28,8 +29,6 @@ function TeamEditDialog(props) {
                     <TeamEditForm
                       code={context.team.code}
                       name={context.team.name}
-                      players={context.team.players}
-                      onClose={onClose}
                     />
                   </div>
                 ),
@@ -41,7 +40,10 @@ function TeamEditDialog(props) {
                     <PlayersAdminList
                       players={context.team.players}
                       teamCode={context.team.code}
-                      onClose={onClose}
+                    />
+                    <Divider />
+                    <PlayerAddForm
+                      teamCode={context.team.code}
                     />
                   </div>
                 ),

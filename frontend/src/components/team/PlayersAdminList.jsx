@@ -6,7 +6,7 @@ import PlayersAdminListItem from './PlayersAdminListItem.jsx';
 function PlayersAdminList(props) {
   const { players, teamCode, onClose } = props;
   return (
-    <ul>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
       {players.map(player => (
         <PlayersAdminListItem
           key={player.id}
@@ -15,13 +15,12 @@ function PlayersAdminList(props) {
           teamCode={teamCode}
         />
       ))}
-    </ul>
+    </div>
   );
 }
 PlayersAdminList.propTypes = {
   players: PropTypes.arrayOf(PropTypes.object).isRequired,
   teamCode: PropTypes.string.isRequired,
-  onClose: PropTypes.func.isRequired,
 };
 
 export default PlayersAdminList;
