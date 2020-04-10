@@ -36,7 +36,7 @@ function TeamCreateForm() {
           <p>{submitError}</p>
         </Message>
       )}
-      <Form.Field width={8}>
+      <Form.Field>
         <label>Team Name</label>
         <input
           name="teamName"
@@ -46,7 +46,7 @@ function TeamCreateForm() {
           autoComplete="off"
         />
       </Form.Field>
-      <Form.Field width={8}>
+      <Form.Field>
         <label>Player Name</label>
         <input
           name="playerName"
@@ -56,7 +56,7 @@ function TeamCreateForm() {
           autoComplete="off"
         />
       </Form.Field>
-      <Button type="submit" disabled={!canSubmit}>Create New Team</Button>
+      <Button type="submit" fluid disabled={!canSubmit}>Create Team</Button>
     </Form>
   );
 }
