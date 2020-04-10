@@ -11,7 +11,7 @@ function FossilTableSection(props) {
   return (
     <React.Fragment>
       <Table.Row className="species-row">
-        <Table.Cell colSpan={2}>{speciesName}</Table.Cell>
+        <Table.Cell colSpan={2} className="species-name">{speciesName}</Table.Cell>
         <Table.Cell>
           <PlayerHaveLabels players={players} />
         </Table.Cell>

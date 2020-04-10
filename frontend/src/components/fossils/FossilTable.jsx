@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import { Table, Message, Loader } from 'semantic-ui-react';
 
-
 import { FossilsContext } from '../../contexts/FossilsContext.jsx';
 
 import FossilTableSection from './FossilTableSection.jsx';

@@ -8,6 +8,14 @@
   font-weight: bold;
 }
 
+.species-name {
+  text-transform: capitalize;
+}
+
 .piece-id {
   color: #aaa;
+}
+
+.piece-name {
+  text-transform: capitalize;
 }

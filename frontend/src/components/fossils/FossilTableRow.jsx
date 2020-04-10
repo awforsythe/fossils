@@ -10,7 +10,7 @@ function FossilTableRow(props) {
   return (
     <Table.Row>
       <Table.Cell width={1} className="piece-id">{pieceId}</Table.Cell>
-      <Table.Cell width={3}>{pieceName}</Table.Cell>
+      <Table.Cell width={3} className="piece-name">{pieceName}</Table.Cell>
       <Table.Cell width={12}>
         <PlayerHaveCells pieceId={pieceId} players={players} />
       </Table.Cell>
