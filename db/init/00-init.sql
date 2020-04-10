@@ -52,4 +52,27 @@ comment on table fossil.have is 'Association table tracking which players have w
 comment on column fossil.have.player_id is 'ID of a single player';
 comment on column fossil.have.piece_id is 'ID of a single piece which that player owns';
 
+create function notify_row_change() returns trigger as $trigger$
+declare
+  rec record;
+  payload text;
+begin
+  case TG_OP
+  when 'INSERT', 'UPDATE' then rec := NEW;
+  when 'DELETE' then rec := OLD;
+  else raise exception 'Unknown TG_OP: "%s"', TG_OP;
+  end case;
+  perform pg_notify('db_events', json_build_object('table', TG_TABLE_NAME, 'op', lower(TG_OP), 'row', row_to_json(rec))::text);
+  return rec;
+end;
+$trigger$ language plpgsql;
+
+create trigger on_team_change
+  after update on fossil.team
+  for each row execute function notify_row_change();
+
+create trigger on_player_change
+  after insert or update or delete on fossil.player
+  for each row execute function notify_row_change();
+
 commit;

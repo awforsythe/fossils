@@ -1,4 +1,39 @@
-const { Pool } = require('pg');
+const { Pool, Client } = require('pg');
+const socket = require('./socket');
+
+async function initClient(numAttempts, attemptInterval) {
+  console.log('Initializing database connection for event listener...');
+  for (let attemptIndex = 0; attemptIndex < numAttempts; attemptIndex++) {
+    const client = new Client();
+    try {
+      await client.connect();
+      return client;
+    } catch (err) {
+      const retryDesc = attemptIndex === numAttempts - 1 ? 'all retries exhausted' : `will retry in ${attemptInterval / 1000.0} seconds...`;
+      console.log(`Database client could not connect on attempt ${attemptIndex + 1} of ${numAttempts}; ${retryDesc}`);
+      if (attemptIndex < numAttempts - 1) {
+        await new Promise(resolve => setTimeout(resolve, attemptInterval));
+      }
+    }
+  }
+  throw new Error('Failed to connect database client');
+}
+
+initClient(10, 500)
+.then(client => {
+  console.log('Database connection established; listening for "db_events".');
+  client.on('notification', (message) => {
+    const payload = JSON.parse(message.payload);
+    const teamId = payload.table === 'team' ? payload.row.id : payload.row.team_id;
+    console.log(`Received database change event: ${payload.op} on ${payload.table}, row ${payload.row.id}`);
+    socket.emit(message.payload, teamId);
+  });
+  client.query('LISTEN "db_events";');
+})
+.catch(err => {
+  console.log(`Failed to establish database connection for event listener: ${err}`);
+  process.exit(1);
+});
 
 const pool = new Pool();
 
@@ -32,6 +67,7 @@ function interpolateQuery(queryStr, paramsObj) {
 }
 
 module.exports = {
+  db: pool,
   runQuery: (query, paramsFunc) => (
     async (req, res, next) => {
       let params;

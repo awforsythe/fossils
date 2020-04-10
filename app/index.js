@@ -8,13 +8,15 @@ const expressWs = require('express-ws')(app, server);
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const apiRouter = require('./routes/index.js');
+const wsRouter = require('./routes/ws');
+const apiRouter = require('./routes');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+app.use('/ws', wsRouter);
 app.use('/api', apiRouter);
 
 app.use((err, req, res, next) => {
