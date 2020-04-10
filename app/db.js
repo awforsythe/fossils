@@ -24,9 +24,15 @@ initClient(10, 500)
   console.log('Database connection established; listening for "db_events".');
   client.on('notification', (message) => {
     const payload = JSON.parse(message.payload);
-    const teamId = payload.table === 'team' ? payload.row.id : payload.row.team_id;
-    console.log(`Received database change event: ${payload.op} on ${payload.table}, row ${payload.row.id}`);
-    socket.emit(message.payload, teamId);
+    if (payload.table === 'have') {
+      const teamId = payload.team_id;
+      console.log(`Received database change event: ${payload.op} on ${payload.table}, player ${payload.row.player_id}; piece ${payload.row.piece_id}`);
+      socket.emit(message.payload, teamId);
+    } else {
+      const teamId = payload.table === 'team' ? payload.row.id : payload.row.team_id;
+      console.log(`Received database change event: ${payload.op} on ${payload.table}, row ${payload.row.id}`);
+      socket.emit(message.payload, teamId);
+    }
   });
   client.query('LISTEN "db_events";');
 })

@@ -22,7 +22,6 @@ function PlayerAddForm(props) {
     })
       .then(expectJson)
       .then(data => {
-        console.log(data);
         setName('');
         setIsSubmitting(false);
       })

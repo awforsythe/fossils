@@ -23,7 +23,7 @@ class TeamProvider extends React.Component {
       }
     } else if (event.table === 'player') {
       const i = team.players.findIndex(x => x.id === event.row.id);
-      const player = { id: event.row.id, name: event.row.name };
+      const player = { id: event.row.id, name: event.row.name, pieces: i >= 0 ? team.players[i].pieces : [] };
       if (event.op === 'insert' && i < 0) {
         const players = team.players.concat([player]);
         this.setState({ team: { ...team, players } });
@@ -32,6 +32,18 @@ class TeamProvider extends React.Component {
         this.setState({ team: { ...team, players } });
       } else if (event.op === 'delete' && i >= 0) {
         const players = team.players.slice(0, i).concat(team.players.slice(i + 1));
+        this.setState({ team: { ...team, players } });
+      }
+    } else if (event.table === 'have' && (event.op === 'insert' || event.op === 'delete')) {
+      const i = team.players.findIndex(x => x.id === event.row.player_id);
+      if (i >= 0) {
+        const pieces = event.op === 'insert' ? (
+          [...team.players[i].pieces].concat([event.row.piece_id]).sort((a, b) => a - b)
+        ) : (
+          team.players[i].pieces.filter(x => x !== event.row.piece_id).sort((a, b) => a - b)
+        );
+        const player = { ...team.players[i], pieces };
+        const players = team.players.slice(0, i).concat([player]).concat(team.players.slice(i + 1));
         this.setState({ team: { ...team, players } });
       }
     }

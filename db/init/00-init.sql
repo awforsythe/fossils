@@ -55,14 +55,28 @@ comment on column fossil.have.piece_id is 'ID of a single piece which that playe
 create function notify_row_change() returns trigger as $trigger$
 declare
   rec record;
-  payload text;
 begin
   case TG_OP
-  when 'INSERT', 'UPDATE' then rec := NEW;
-  when 'DELETE' then rec := OLD;
-  else raise exception 'Unknown TG_OP: "%s"', TG_OP;
+    when 'INSERT', 'UPDATE' then rec := NEW;
+    when 'DELETE' then rec := OLD;
+    else raise exception 'Unknown TG_OP: "%s"', TG_OP;
   end case;
   perform pg_notify('db_events', json_build_object('table', TG_TABLE_NAME, 'op', lower(TG_OP), 'row', row_to_json(rec))::text);
+  return rec;
+end;
+$trigger$ language plpgsql;
+
+create function notify_have_change() returns trigger as $trigger$
+declare
+  rec record;
+  resolved_team_id integer;
+begin
+  case TG_OP
+    when 'DELETE' then rec := OLD;
+    else rec := NEW;
+  end case;
+  select team_id into resolved_team_id from fossil.player where id = rec.player_id;
+  perform pg_notify('db_events', json_build_object('team_id', resolved_team_id, 'table', TG_TABLE_NAME, 'op', lower(TG_OP), 'row', row_to_json(rec))::text);
   return rec;
 end;
 $trigger$ language plpgsql;
@@ -74,5 +88,9 @@ create trigger on_team_change
 create trigger on_player_change
   after insert or update or delete on fossil.player
   for each row execute function notify_row_change();
+
+create trigger on_have_change
+  after insert or delete on fossil.have
+  for each row execute function notify_have_change();
 
 commit;
