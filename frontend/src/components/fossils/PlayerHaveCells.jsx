@@ -5,7 +5,18 @@ import { Grid } from 'semantic-ui-react';
 
 import PlayerHaveCell from './PlayerHaveCell.jsx';
 
-const colors = ['red', 'orange', 'yellow', 'olive', 'green', 'teal', 'blue', 'violet', 'purple', 'pink'];
+function getColor(i, n) {
+  const allColors = ['red', 'orange', 'yellow', 'olive', 'green', 'teal', 'blue', 'violet', 'purple', 'pink'];
+  const mediumTeamSizeColors = ['red', 'yellow', 'green', 'blue', 'purple'];
+  const smallTeamSizeColors = ['red', 'green', 'blue'];
+  if (i < n && n <= smallTeamSizeColors.length) {
+    return smallTeamSizeColors[i];
+  }
+  if (i < n && n <= mediumTeamSizeColors.length) {
+    return mediumTeamSizeColors[i];
+  }
+  return allColors[i % allColors.length];
+}
 
 function PlayerHaveCells(props) {
   const { pieceId, players, teamCode } = props;
@@ -16,7 +27,7 @@ function PlayerHaveCells(props) {
           <Grid.Column key={player.id}>
             <PlayerHaveCell
               active={player.pieces.includes(pieceId)}
-              color={colors[i % colors.length]}
+              color={getColor(i, players.length)}
               teamCode={teamCode}
               playerId={player.id}
               playerName={player.name}
