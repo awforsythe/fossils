@@ -14,7 +14,7 @@ module.exports = {
     publicPath: '/',
     historyApiFallback: true,
   },
-  plugins: [new HtmlWebpackPlugin({ title: 'Fossils' })],
+  plugins: [new HtmlWebpackPlugin({ title: 'Fossiltown' })],
   mode: process.env.NODE_ENV || 'development',
   module: {
     rules: [

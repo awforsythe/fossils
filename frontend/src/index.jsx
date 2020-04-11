@@ -14,7 +14,7 @@ import TeamPage from './pages/TeamPage.jsx';
 
 const App = () => (
   <Container className="main-container">
-    <h1>Fossils</h1>
+    <h1>Fossiltown</h1>
     <FossilsProvider>
       <Router>
         <Switch>

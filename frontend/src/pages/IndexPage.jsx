@@ -20,7 +20,7 @@ const IndexPage = () => (
   <div>
     <Inset>
       <Message>
-        <Message.Header>Welcome to the fossil tracker!</Message.Header>
+        <Message.Header>Welcome to Fossiltown!</Message.Header>
         <Message.Content>
           If you'd like to create a team to track fossils with your friends, use the form below to get started. Once
           you've created a team, you'll be given a Secret URL. You'll need that URL to access your team's page later,
