@@ -48,14 +48,13 @@ insert into fossil.piece (species_id, name) values
 
 with s as (insert into fossil.species (name) values ('deinonychus') returning id)
 insert into fossil.piece (species_id, name) values
-    ((select id from s), 'deinonychus torso'),
-    ((select id from s), 'deinonychus tail');
+    ((select id from s), 'deinony torso'),
+    ((select id from s), 'deinony tail');
 
 with s as (insert into fossil.species (name) values ('dimetrodon') returning id)
 insert into fossil.piece (species_id, name) values
     ((select id from s), 'dimetrodon skull'),
-    ((select id from s), 'dimetrodon torso'),
-    ((select id from s), 'dimetrodon tail');
+    ((select id from s), 'dimetrodon torso');
 
 with s as (insert into fossil.species (name) values ('dinosaur track') returning id)
 insert into fossil.piece (species_id, name) values
@@ -101,8 +100,8 @@ insert into fossil.piece (species_id, name) values
 
 with s as (insert into fossil.species (name) values ('megaloceros') returning id)
 insert into fossil.piece (species_id, name) values
-    ((select id from s), 'megalo left side'),
-    ((select id from s), 'megalo right side');
+    ((select id from s), 'left megalo side'),
+    ((select id from s), 'right megalo side');
 
 with s as (insert into fossil.species (name) values ('myllokunmingia') returning id)
 insert into fossil.piece (species_id, name) values
@@ -111,43 +110,41 @@ insert into fossil.piece (species_id, name) values
 with s as (insert into fossil.species (name) values ('ophthalmosaurus') returning id)
 insert into fossil.piece (species_id, name) values
     ((select id from s), 'ophthalmo skull'),
-    ((select id from s), 'ophthalmo torso'),
-    ((select id from s), 'ophthalmo tail');
+    ((select id from s), 'ophthalmo torso');
 
 with s as (insert into fossil.species (name) values ('pachycephalosaurus') returning id)
 insert into fossil.piece (species_id, name) values
-    ((select id from s), 'pachy skull'),
-    ((select id from s), 'pachy torso'),
-    ((select id from s), 'pachy tail');
+    ((select id from s), 'pachysaurus skull'),
+    ((select id from s), 'pachysaurus tail');
 
-with s as (insert into fossil.species (name) values ('parasaurolophus') returning id)
+with s as (insert into fossil.species (name) values ('parasaur') returning id)
 insert into fossil.piece (species_id, name) values
     ((select id from s), 'parasaur skull'),
     ((select id from s), 'parasaur torso'),
     ((select id from s), 'parasaur tail');
 
-with s as (insert into fossil.species (name) values ('plesiosaurus') returning id)
+with s as (insert into fossil.species (name) values ('plesiosaur') returning id)
 insert into fossil.piece (species_id, name) values
     ((select id from s), 'plesio skull'),
-    ((select id from s), 'plesio neck'),
-    ((select id from s), 'plesio torso');
+    ((select id from s), 'plesio tail'),
+    ((select id from s), 'plesio body');
 
 with s as (insert into fossil.species (name) values ('pteranodon') returning id)
 insert into fossil.piece (species_id, name) values
+    ((select id from s), 'right ptera wing'),
     ((select id from s), 'ptera body'),
-    ((select id from s), 'left ptera wing'),
-    ((select id from s), 'right ptera wing');
+    ((select id from s), 'left ptera wing');
 
 with s as (insert into fossil.species (name) values ('quetzalcoatlus') returning id)
 insert into fossil.piece (species_id, name) values
+    ((select id from s), 'right quetzal wing'),
     ((select id from s), 'quetzal torso'),
-    ((select id from s), 'left quetzal wing'),
-    ((select id from s), 'right quetzal wing');
+    ((select id from s), 'left quetzal wing');
 
 with s as (insert into fossil.species (name) values ('sabertooth tiger') returning id)
 insert into fossil.piece (species_id, name) values
     ((select id from s), 'sabertooth skull'),
-    ((select id from s), 'sabertooth torso');
+    ((select id from s), 'sabertooth tail');
 
 with s as (insert into fossil.species (name) values ('shark-tooth pattern') returning id)
 insert into fossil.piece (species_id, name) values
@@ -159,17 +156,11 @@ insert into fossil.piece (species_id, name) values
     ((select id from s), 'spino torso'),
     ((select id from s), 'spino tail');
 
-with s as (insert into fossil.species (name) values ('stegosaurus') returning id)
+with s as (insert into fossil.species (name) values ('stegosaur') returning id)
 insert into fossil.piece (species_id, name) values
     ((select id from s), 'stego skull'),
     ((select id from s), 'stego torso'),
     ((select id from s), 'stego tail');
-
-with s as (insert into fossil.species (name) values ('tyrannosaurus rex') returning id)
-insert into fossil.piece (species_id, name) values
-    ((select id from s), 't. rex skull'),
-    ((select id from s), 't. rex torso'),
-    ((select id from s), 't. rex tail');
 
 with s as (insert into fossil.species (name) values ('triceratops') returning id)
 insert into fossil.piece (species_id, name) values
@@ -180,5 +171,11 @@ insert into fossil.piece (species_id, name) values
 with s as (insert into fossil.species (name) values ('trilobite') returning id)
 insert into fossil.piece (species_id, name) values
     ((select id from s), 'trilobite');
+
+with s as (insert into fossil.species (name) values ('tyrannosaurus rex') returning id)
+insert into fossil.piece (species_id, name) values
+    ((select id from s), 't. rex skull'),
+    ((select id from s), 't. rex torso'),
+    ((select id from s), 't. rex tail');
 
 commit;
