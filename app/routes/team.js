@@ -148,14 +148,19 @@ router.get('/:code', [
   ],
   validateParams,
   async (req, res, next) => {
+    // Look up the team: if the request doesn't have a valid code, abort
     const teamResult = await db.query('SELECT * FROM fossil.team WHERE code = $1;', [req.params.code]);
     if (teamResult.rowCount !== 1) {
       return res.status(404).send({ message: `No team found with code '${req.params.code}'` });
     }
+
+    // Look up the set of players belonging to that team
     const playersResult = await db.query('SELECT id, name FROM fossil.player WHERE team_id = $1;', [teamResult.rows[0].id]);
     if (playersResult.rowCount === 0) {
       return res.send({ ...teamResult.rows[0], players: [] });
     }
+
+    // Aggregate a list of piece IDs that each player has
     const playerIds = playersResult.rows.map(x => x.id);
     const haveResult = await db.query(`
       SELECT player_id, json_agg(piece_id) AS pieces FROM fossil.have
@@ -163,14 +168,13 @@ router.get('/:code', [
       GROUP BY player_id;
     `, playerIds);
 
+    // Construct a result players array, where each player has an id, a name, and a 'pieces' array listing piece IDs
     let players = [];
     for (const playerRow of playersResult.rows) {
       const haveRow = haveResult.rows.find(x => x.player_id == playerRow.id);
       const pieces = haveRow ? haveRow.pieces : [];
       players.push({ ...playerRow, pieces });
     }
-
-    console.log(haveResult.rows)
     res.send({ ...teamResult.rows[0], players });
   }
 );
