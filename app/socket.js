@@ -1,10 +1,26 @@
 let socketsByTeamId = {};
 
+setInterval(() => {
+  for (const teamId in socketsByTeamId) {
+    for (const socket of socketsByTeamId[teamId]) {
+      if (!socket.isAlive) {
+        console.log('A socket has timed out; terminating it...');
+        socket.terminate();
+      } else {
+        socket.isAlive = false;
+        socket.ping(function() {});
+      }
+    }
+  }
+}, 5000);
+
 module.exports = {
   register: (socket, teamId) => {
     if (socketsByTeamId[teamId] === undefined) {
       socketsByTeamId[teamId] = [];
     }
+    socket.isAlive = true;
+    socket.on('pong', () => { socket.isAlive = true; });
     socketsByTeamId[teamId].push(socket);
     console.log(`Registered socket endpoint for team ${teamId}`);
   },
